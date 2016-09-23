@@ -1,0 +1,18 @@
+#content{
+	img{
+	max-width: 100%;
+	}
+	p,code,a{
+		white-space: pre-wrap;
+		word-wrap: break-word;
+	}
+	code{
+		width: 100%;
+		font-size:11px;
+	}
+	.content h2{
+		font-size: 20px;
+		line-height: 30px;
+		padding-bottom: 15px;
+	}
+}
