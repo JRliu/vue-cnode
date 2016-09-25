@@ -3,7 +3,7 @@
 		<form>
 			<label>Access Token</label>
 			<textarea rows="2" v-model='accessToken'
-				   class="password"></textarea>
+				   class="password">ce3d4bcc-f85b-4c39-96f3-251c49d7416d</textarea>
 			<mt-button class='logBtn' size='large'
 						@click.prevent='loginIn(this.accessToken)'
 						>

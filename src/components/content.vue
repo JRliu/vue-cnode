@@ -67,7 +67,8 @@
 			<div class="myReply" v-if='loginStatus' >
 				<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
 						  placeholder="快来回复楼主吧！" required
-						  v-model='myReply'></textarea>
+						  v-model='myReply'
+						  @click='iosScrollTo'></textarea>
 				<mt-button type='primary' size='large'
 							@click='reply'>发表</mt-button>
 			</div>
@@ -183,7 +184,7 @@
 			},
 			replyFocus:function(){
 				let reply=document.getElementById('replyAuthor');
-				reply.focus()
+				reply.scrollIntoView();
 			},
 			ups:function(id,ups){
 				this.$http({
@@ -234,6 +235,18 @@
 						reply.focus();
 					})
 				}
+			},
+			// ios下键盘挡住textarea
+			iosScrollTo:function(e){
+				let u = navigator.userAgent;
+				let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+				let scrollBottom=()=> {
+				    window.scrollTo(0, document.getElementById('content').clientHeight);
+				}
+				if (isiOS) {
+			      	setTimeout(scrollBottom, 500)
+				}
+				
 			}
 		},
 		ready:function(){
