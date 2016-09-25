@@ -1,6 +1,6 @@
 # cnode
 
-> cnode
+> 基于vuejs,vuex,vue-router,vue-resource,Mint-UI,使用了cnode论坛公开的所有API
 
 ## Build Setup
 
