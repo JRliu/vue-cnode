@@ -160,16 +160,12 @@
 		},
 		route:{
 			data(transition){
-				//重内容页返回时调整scrolltop到进入内容时的状态
-				if(transition.from.name=='topic'){
-					this.$nextTick(()=> document.body.scrollTop=sessionStorage.scrollTop);
-				}
+				//返回时调整scrolltop到进入内容时的状态
+				this.$nextTick(()=> document.body.scrollTop=sessionStorage.scrollTop);
 			},
 			deactivate(transition){
-				//进入内容时保存scrolltop
-				if(transition.to.name=="topic"){
-					sessionStorage.scrollTop = document.body.scrollTop;
-				}
+				//离开时保存scrolltop
+				sessionStorage.scrollTop = document.body.scrollTop;
 				transition.next();
 			}
 		}
