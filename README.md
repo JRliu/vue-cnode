@@ -1,6 +1,7 @@
 # cnode
 
 > 基于vuejs,vuex,vue-router,vue-resource,Mint-UI,使用了cnode论坛公开的所有API
+>脚手架是vue-cli
 
 ## Build Setup
 
@@ -15,5 +16,3 @@ npm run dev
 npm run build
 
 ```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
