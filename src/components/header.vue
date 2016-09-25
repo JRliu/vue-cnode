@@ -52,9 +52,8 @@
 			font-size: .6rem;
 			position: absolute;
 			left: 2%;
-			line-height: .7rem;
+			line-height: .675rem;
 			&:before{
-				line-height: .7rem;
 				position: relative;
 			}
 		}
