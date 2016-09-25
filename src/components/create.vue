@@ -42,6 +42,9 @@
 				}
 			}
 		},
+		ready:function(){
+			window.scrollTo(0,0);
+		},
 		methods:{
 			publish:function(){
 				this.$http({
