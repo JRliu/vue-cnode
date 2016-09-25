@@ -57,7 +57,8 @@
 					<!-- 回复该楼 -->
 					<div class="myReply" v-if='re.id===showReplyId'>
 						<textarea name="myReply" class="myReplyText" rows="3" required
-								  v-model='myReReply' id="reReply">@{{showReplyName}}  </textarea>
+								  v-model='myReReply' id="reReply"
+								  @click='iosScrollTo'>@{{showReplyName}}  </textarea>
 						<mt-button type='default' size='small'
 									@click="reReply(re.id)">回复该楼</mt-button>
 					</div>
@@ -241,9 +242,11 @@
 				let u = navigator.userAgent;
 				let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 				let scrollBottom=()=> {
-				    window.scrollTo(0, document.getElementById('content').clientHeight);
+				    let win=document.body.scrollTop;
+				    let el=e.target.offsetTop;
+				    document.body.scrollTop=win+(el-win)-100
 				}
-				if (isiOS) {
+				if (!isiOS) {
 			      	setTimeout(scrollBottom, 500)
 				}
 				
