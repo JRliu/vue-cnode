@@ -25,7 +25,13 @@
 				<div class="main-content"
 					 v-html='data.content'>
 				</div>
+				<mt-button :type="isCollect" size='small' 
+							v-if='loginStatus'
+						   @click='replyFocus'>
+					回复
+				</mt-button>
 			</div>
+
 		<!-- 回复数量 -->
 			<div class="replies_count">
 				<div class="count">共{{data.reply_count}}条回复</div>
@@ -45,21 +51,21 @@
 					</div>
 					<!-- 点赞和回复评论 -->
 					<div class="ups clear" v-if='loginStatus'>
-						<div @click='ups(re.id)'>点赞({{re.ups.length}})</div>
+						<div @click='ups(re.id,re.ups)'>{{upsText(re)}}({{re.ups.length}})</div>
 						<div @click='showReply(re.id,re.author.loginname)'>回复</div>
 					</div>
 					<!-- 回复该楼 -->
 					<div class="myReply" v-if='re.id===showReplyId'>
 						<textarea name="myReply" class="myReplyText" rows="3" required
-								  v-model='myReReply'>@{{showReplyName}}  </textarea>
+								  v-model='myReReply' id="reReply">@{{showReplyName}}  </textarea>
 						<mt-button type='default' size='small'
 									@click="reReply(re.id)">回复该楼</mt-button>
 					</div>
 				</div>
 			</div>
 		<!-- 回复楼主 -->
-			<div class="myReply" v-if='loginStatus'>
-				<textarea name="myReply" class="myReplyText" rows="5" 
+			<div class="myReply" v-if='loginStatus' >
+				<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
 						  placeholder="快来回复楼主吧！" required
 						  v-model='myReply'></textarea>
 				<mt-button type='primary' size='large'
@@ -87,7 +93,8 @@
 			return{
 				id:this.$route.params.id,
 				data:{
-					author:{}
+					author:{},
+					content:''
 				},
 				myReply:'',
 				myReReply:'',
@@ -118,6 +125,9 @@
 				},
 				loginStatus:function(state){
 					return state.loginStatus;
+				},
+				userId:function({userData}){
+					return userData.id
 				}
 			}
 		},
@@ -133,26 +143,29 @@
 				});
 			},
 			collectToggle:function(){
-				let toggle=(url,boolean)=>{
+
+				let toggle=(url,boolean,succ)=>{
 					this.$http({
 						url:'https://cnodejs.org/api/v1/topic_collect/'+url,
 						method:'POST',
 						body:{accesstoken:this.accessToken,
 							  topic_id:this.data.id}
 					}).then((response)=>{
-						Vue.set(this.data,'is_collect',boolean)
+						Vue.set(this.data,'is_collect',boolean);
+						succ()
 					}).catch((err)=>{
 						console.warn(err)
 					})
 				}
 				if(!this.data.is_collect){
 					let url='collect',boolean=true;
-					toggle(url,boolean)
-					Toast({message:'收藏成功',duration:1000})
+					let succ=()=>{Toast({message:'收藏成功',duration:1000})};
+					toggle(url,boolean,succ)
+					
 				}else{
 					let url='de_collect',boolean=false;
-					toggle(url,boolean)
-					Toast({message:'取消成功',duration:1000})
+					let succ=()=>{Toast({message:'取消成功',duration:1000})};
+					toggle(url,boolean,succ)
 				}
 			},
 			reply:function(replyId){
@@ -168,21 +181,32 @@
 					console.log(err)
 				})
 			},
-			ups:function(id){
+			replyFocus:function(){
+				let reply=document.getElementById('replyAuthor');
+				reply.focus()
+			},
+			ups:function(id,ups){
 				this.$http({
 					url:'https://cnodejs.org/api/v1/reply/'+id+'/ups',
 					method:'POST',
 					body:{accesstoken:this.accessToken}
 				}).then((response)=>{
-					// let items=this.data.replies.filter(function(item){
-					// 	return item.id==id
-					// })
-					// let item=items[0];
-					// item.ups.push('0')
-					// console.log(item[0].ups)
+					console.log(response)
+					if(response.body.action=='up'){
+						ups.push(this.userId)
+					}else{
+						let index=ups.indexOf(this.userId)
+						ups.splice(index,1)
+					}
 				}).catch((err)=>{
 					console.log(err)
 				})
+			},
+			//点赞按钮文字
+			upsText:function(re){
+				if(re.ups.some((item,index,array)=>{
+					return item==this.userId
+				})){return '已赞'}else{return '点赞'}
 			},
 			reReply:function(replyId){
 				this.$http({
@@ -205,12 +229,15 @@
 				}else{
 					this.showReplyId=id;
 					this.showReplyName=name;
+					this.$nextTick(function(){
+						let reply=document.getElementById('reReply')
+						reply.focus();
+					})
 				}
 			}
 		},
 		ready:function(){
 			this.getData();
-			//修改@user 的href
 		}
 	}
 </script>
@@ -243,8 +270,9 @@
 			}
 		}
 		.content{
+			background-color: #fff;
+			padding-bottom: 10px;
 			.author{
-				background-color: #fff;
 				img{
 					height:0.5rem;
 					display: block;
@@ -264,7 +292,6 @@
 				font-size:.26rem;
 				line-height: .4rem;
 				padding: 10px;
-				background-color: #fff;
 			}
 		}
 		.replies_count{

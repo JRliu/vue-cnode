@@ -14,7 +14,7 @@
 <!-- 帖子 -->
 		<div class="topic" v-for='topic in topics'>
 			<!-- 头像 -->
-			<img :src="topic.author.avatar_url"  
+			<img v-lazy="topic.author.avatar_url"   
 				 v-link="{name:'user',params:{username:topic.author.loginname}}">
 			<!-- 标签（精华  等） -->
 			<div class="tab" 
@@ -241,11 +241,16 @@
 	}
 	img{
 		height:0.75rem;
+		width:0.75rem;
 		display: block;
 		padding: .125rem;
 		border-radius: 15%;
 		float: left;
 		cursor:pointer; 
+	}
+	img[lazy=loading] {
+	  height:0.75rem;
+	  width:0.75rem;
 	}
 	.pages{
 		height:50px;

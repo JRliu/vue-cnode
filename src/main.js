@@ -3,7 +3,10 @@ import App from './App'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
 import Vuex from 'vuex'
-
+// 懒加载
+import { Lazyload } from 'mint-ui';
+import 'mint-ui/lib/lazyload/style.css'
+Vue.use(Lazyload);
 
 //重置样式
 require('./css/reset.css');
