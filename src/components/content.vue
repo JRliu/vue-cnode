@@ -244,7 +244,7 @@
 				let scrollBottom=()=> {
 				    let win=document.body.scrollTop;
 				    let el=e.target.offsetTop;
-				    document.body.scrollTop=win+(el-win)-100
+				    document.body.scrollTop=win+(el-win)-55
 				}
 				if (isiOS) {
 			      	setTimeout(scrollBottom, 500)
