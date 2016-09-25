@@ -58,8 +58,8 @@
 			}
 		}
 		span{
-			font-size: .6rem;
-			line-height: .7rem;
+			font-size: .7rem;
+			line-height: .65rem;
 			width: .6rem;
 			position: absolute;
 			right: 2%;
