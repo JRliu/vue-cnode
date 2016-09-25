@@ -5,16 +5,16 @@
 ## Build Setup
 
 ``` bash
-# install dependencies
+# 安装依赖库
 npm install
 
-# serve with hot reload at localhost:8080
+# 进入开发状态，本地服务地址：http://localhost:8080
 npm run dev
 
-# build for production with minification
+# 压缩、打包
 npm run build
 
-# run unit tests
+# 单元测试
 npm run unit
 
 # run e2e tests
