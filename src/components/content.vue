@@ -240,7 +240,7 @@
 				let scrollBottom=()=> {
 				    let win=document.body.scrollTop;
 				    let el=e.target.offsetTop;
-				    document.body.scrollTop=win+(el-win)-20
+				    document.body.scrollTop=win+(el-win)-15
 				}
 				if (isiOS) {
 			      	setTimeout(scrollBottom, 500)
@@ -254,7 +254,7 @@
 		route:{
 			data(transition){
 				//返回时调整scrolltop到进入内容时的状态
-				if(transition.from.name=='user'){
+				if(transition.from.name=='user'&&sessionStorage.contentId==this.id){
 					this.$nextTick(()=> {
 						setTimeout(()=>{
 							document.body.scrollTop=sessionStorage.contentScrollTop;
@@ -266,6 +266,7 @@
 				//离开时保存scrolltop
 				if(transition.to.name=='user'){
 					sessionStorage.contentScrollTop = document.body.scrollTop;
+					sessionStorage.contentId=this.id;
 				}
 				transition.next();
 			}
