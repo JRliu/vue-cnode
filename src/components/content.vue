@@ -242,7 +242,7 @@
 				    let el=e.target.offsetTop;
 				    document.body.scrollTop=win+(el-win)-20
 				}
-				if (!isiOS) {
+				if (isiOS) {
 			      	setTimeout(scrollBottom, 500)
 				}
 				
