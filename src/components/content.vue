@@ -231,10 +231,6 @@
 				}else{
 					this.showReplyId=id;
 					this.showReplyName=name;
-					this.$nextTick(function(){
-						let reply=document.getElementById('reReply')
-						reply.focus();
-					})
 				}
 			},
 			// ios下键盘挡住textarea
@@ -244,9 +240,9 @@
 				let scrollBottom=()=> {
 				    let win=document.body.scrollTop;
 				    let el=e.target.offsetTop;
-				    document.body.scrollTop=win+(el-win)-55
+				    document.body.scrollTop=win+(el-win)-20
 				}
-				if (isiOS) {
+				if (!isiOS) {
 			      	setTimeout(scrollBottom, 500)
 				}
 				
@@ -254,6 +250,25 @@
 		},
 		ready:function(){
 			this.getData();
+		},
+		route:{
+			data(transition){
+				//返回时调整scrolltop到进入内容时的状态
+				if(transition.from.name=='user'){
+					this.$nextTick(()=> {
+						setTimeout(()=>{
+							document.body.scrollTop=sessionStorage.contentScrollTop;
+						},500)
+					});
+				}
+			},
+			deactivate(transition){
+				//离开时保存scrolltop
+				if(transition.to.name=='user'){
+					sessionStorage.contentScrollTop = document.body.scrollTop;
+				}
+				transition.next();
+			}
 		}
 	}
 </script>
