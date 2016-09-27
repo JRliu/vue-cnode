@@ -134,6 +134,7 @@
 			}
 		},
 		methods:{
+			//获取数据
 			getData:function(){
 				this.$http({
 					url:'https://cnodejs.org/api/v1/topic/'+this.$route.params.id,
@@ -145,7 +146,7 @@
 				});
 			},
 			collectToggle:function(){
-
+			//收藏、取消收藏
 				let toggle=(url,boolean,succ)=>{
 					this.$http({
 						url:'https://cnodejs.org/api/v1/topic_collect/'+url,
@@ -156,7 +157,8 @@
 						Vue.set(this.data,'is_collect',boolean);
 						succ()
 					}).catch((err)=>{
-						console.warn(err)
+						console.warn(err.body)
+						Toast({message:'请求失败，请稍后再试',duration:1000})
 					})
 				}
 				if(!this.data.is_collect){
@@ -170,6 +172,7 @@
 					toggle(url,boolean,succ)
 				}
 			},
+			//回复楼主
 			reply:function(replyId){
 				this.$http({
 					url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
@@ -180,20 +183,21 @@
 					this.getData();
 					this.myReply='';
 				}).catch((err)=>{
-					console.log(err)
+					console.warn(err.body)
+					
 				})
 			},
 			replyFocus:function(){
 				let reply=document.getElementById('replyAuthor');
 				reply.scrollIntoView();
 			},
+			//点赞
 			ups:function(id,ups){
 				this.$http({
 					url:'https://cnodejs.org/api/v1/reply/'+id+'/ups',
 					method:'POST',
 					body:{accesstoken:this.accessToken}
 				}).then((response)=>{
-					console.log(response)
 					if(response.body.action=='up'){
 						ups.push(this.userId)
 					}else{
@@ -201,7 +205,8 @@
 						ups.splice(index,1)
 					}
 				}).catch((err)=>{
-					console.log(err)
+					console.warn(err.body)
+					Toast({message:'请求失败，请稍后再试',duration:1000})
 				})
 			},
 			//点赞按钮文字
@@ -210,6 +215,7 @@
 					return item==this.userId
 				})){return '已赞'}else{return '点赞'}
 			},
+			//回复某楼
 			reReply:function(replyId){
 				this.$http({
 					url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
@@ -224,6 +230,7 @@
 					console.log(err)
 				})
 			},
+			//显示回复某楼输入框
 			showReply:function(id,name){
 				if(this.showReplyId===id){
 					this.showReplyId=0;
@@ -245,7 +252,6 @@
 				if (isiOS) {
 			      	setTimeout(scrollBottom, 500)
 				}
-				
 			}
 		},
 		ready:function(){
@@ -253,12 +259,15 @@
 		},
 		route:{
 			data(transition){
-				//返回时调整scrolltop到进入内容时的状态
+				if(transition.from.name=='tab'){
+					this.getData();
+					document.body.scrollTop=0;
+				}
+				
+				// 返回时调整scrolltop到进入内容时的状态
 				if(transition.from.name=='user'&&sessionStorage.contentId==this.id){
 					this.$nextTick(()=> {
-						setTimeout(()=>{
-							document.body.scrollTop=sessionStorage.contentScrollTop;
-						},500)
+						document.body.scrollTop=sessionStorage.contentScrollTop;
 					});
 				}
 			},

@@ -14,7 +14,7 @@ require('./css/reset.css');
 require('./js/rem.js')
 //过滤器
 require('./js/filter.js')
-//路由
+//http请求
 require('./js/vue-resource.js')
 //iconfont
 require('./css/iconfont/iconfont.css')

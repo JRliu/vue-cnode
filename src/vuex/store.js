@@ -9,6 +9,7 @@ export default new Vuex.Store({
 		page:1,
 		showSidebar:false,
 		refreshTopics:false,
+		getTopics:false,
 		//登陆状态
 		loginStatus:localStorage.getItem('auto-login')||false,
 		userData:JSON.parse( localStorage.getItem('userData') )||'',
@@ -33,14 +34,8 @@ export default new Vuex.Store({
 			state.showSidebar=false;
 			document.body.style.overflow='auto';
 		},
-		CLEAR_TOPICS(state){
-			state.topics=''
-		},
-		REFRESH_END(state){
-			state.refreshTopics=false;
-		},
 		REFRESH_START(state){
-			state.refreshTopics=true;
+			state.refreshTopics=!state.refreshTopics;
 		},
 		LOGIN_IN(state,data){
 			state.loginStatus=true;
@@ -48,6 +43,9 @@ export default new Vuex.Store({
 		},
 		LOGIN_OUT(state,data){
 			state.loginStatus=false;
+		},
+		GET_TOPICS(state,data){
+			state.getTopics=!state.getTopics;
 		}
 	}
 })

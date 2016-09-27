@@ -49,7 +49,7 @@
 			publish:function(){
 				this.$http({
 					method:'POST',
-					url:'https://cnodejs.org/api/v1/topicsd',
+					url:'https://cnodejs.org/api/v1/topics',
 					body:{accesstoken:this.password,
 						  titel:this.title,
 						  tab:this.tab,
@@ -64,14 +64,15 @@
 				//成功时执行
 				let successFn=(response)=>{
 					Toast({message:'发表成功',duration:1000})
+					this.tab='';this.title='';this.content='';
 					this.$route.router.go({
 						name:'tab',
 						params:{tab:this.tab}
-					})
+					});
 				}
 				//失败时执行
 				let errorFn=(err)=>{
-					Toast({message:'发表失败',duration:1000})
+					Toast({message:err.body.error_msg+'!',duration:2000})
 					console.warn(err.body);
 				}
 			}

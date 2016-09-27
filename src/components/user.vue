@@ -63,12 +63,17 @@
 			}
 		},
 		watch:{
-			username:function(){
-				this.getAll();
+			username:function(val,oldVal){
+				if(!!val&!!oldVal){
+					this.getAll();
+					console.log('user')
+				}
 			}
 		},
-		ready:function(){
-			this.getAll();
+		route:{
+			data:function(){
+				this.getAll();
+			}
 		},
 		methods:{
 			get:function(url,username,successFn,errorFn){

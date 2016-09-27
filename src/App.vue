@@ -2,7 +2,7 @@
   <div id="app">
     <vue-header></vue-header>
     <div class="space"></div>
-    <router-view></router-view>
+    <router-view keep-alive></router-view>
     <go-top :bottom='".3rem"' :right='"0"' :screen-num='1.7'></go-top>
     <sidebar v-show='showSidebar' 
              transition='sidebar'

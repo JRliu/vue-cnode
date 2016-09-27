@@ -36,7 +36,7 @@
 		<div class="btns">
 			<div class="btn"
 				 v-for='btn in btns'
-				 v-link="{path:btn.link}"
+				 v-link="{name:'tab',params:{tab:btn.en}}"
 				 @click='goList(btn)'>
 				{{btn.name}}
 			</div>
@@ -60,20 +60,21 @@
 		data(){
 			return{
 				btns:[
-					{name:'首页',link:'/all',en:'all'},
-					{name:'精华',link:'/good',en:'good'},
-					{name:'分享',link:'/share',en:'share'},
-					{name:'问答',link:'/ask',en:'ask'},
-					{name:'招聘',link:'/job',en:'job'},
+					{name:'首页',en:'all'},
+					{name:'精华',en:'good'},
+					{name:'分享',en:'share'},
+					{name:'问答',en:'ask'},
+					{name:'招聘',en:'job'},
 				]
 			}
 		},
 		methods:{
 			goList:function(btn){
-				this.clearTopics();
-				//如果分区不变，则刷新
-				if(btn.en==this.$route.params.tab){
+				//同一标签，则刷新
+				if(this.$route.params.tab==btn.en){
 					this.refreshTopics();
+				}else if(!this.$route.params.tab){
+					this.getTopics();
 				}
 				this.hideSidebar();
 			},
@@ -99,14 +100,14 @@
 						dispatch('HIDE_SIDEBAR');
 					},0)
 				},
-				clearTopics:function({dispatch}){
-					dispatch('CLEAR_TOPICS')
-				},
 				refreshTopics:function({dispatch}){
 					dispatch('REFRESH_START')
 				},
 				logoutStatus:function({dispatch}){
 					dispatch('LOGIN_OUT')
+				},
+				getTopics:function({dispatch}){
+					dispatch('GET_TOPICS')
 				}
 			},
 			getters:{

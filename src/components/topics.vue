@@ -60,17 +60,13 @@
 			}
 		},
 		watch:{
-			//切换分区
-			tabName:function(val,oldVal){
-				setTimeout(()=>{
-					this.getTopics()
-				},0)
-			},
 			refreshSwitch:function(val,oldVal){
-				if(oldVal==false){
-					this.refresh();
-					this.refreshEnd();
-				}
+				this.refresh();				
+			},
+			sidebarGetTopics:function(){
+				setTimeout(()=>{
+					this.getTopics();
+				},0)
 			}
 		},
 		ready:function(){
@@ -102,6 +98,9 @@
 					console.warn(err);
 				};
 				this.get(page,successFn,errorFn)
+				this.$nextTick(()=>{
+					document.body.scrollTop=0;
+				})
 			},
 		//上拉后获取更多
 			loadMore:function(id){
@@ -130,6 +129,8 @@
 					console.warn(err);
 				};
 				this.get(page,successFn,errorFn);
+
+				document.body.scrollTop=0;
 			}
 		},
 		vuex:{
@@ -142,6 +143,9 @@
 				},
 				refreshSwitch:function(state){
 					return state.refreshTopics;
+				},
+				sidebarGetTopics:function(state){
+					return state.getTopics;
 				}
 			},
 			actions:{
@@ -149,19 +153,23 @@
 				saveTopics:function({dispatch},data){
 					dispatch('SAVE_TOPICS',data)
 				},
-			//获取更多后拼接进原有的帖子
+			//获取更多后拼接原有的帖子
 				moreTopics:function({dispatch},data){
 					dispatch('MORE_TOPICS',data)
-				},
-				refreshEnd:function({dispatch}){
-					dispatch('REFRESH_END')
 				}
 			}
 		},
 		route:{
-			data(transition){
+			data:function(transition){
+				if(transition.from.name=='tab'){
+					this.getTopics()
+				}
+				
 				//返回时调整scrolltop到进入内容时的状态
-				this.$nextTick(()=> document.body.scrollTop=sessionStorage.scrollTop);
+				if(transition.from.name!='tab'){
+					this.$nextTick(()=> document.body.scrollTop=sessionStorage.scrollTop);
+				}
+				
 			},
 			deactivate(transition){
 				//离开时保存scrolltop
