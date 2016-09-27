@@ -11,7 +11,7 @@ Vue.http.interceptors.push((request, next) => {
 	  spinnerType: 'fading-circle'
 	});
     next((response) => {
-        Indicator.close();
+    	Indicator.close();
     });
 });
 

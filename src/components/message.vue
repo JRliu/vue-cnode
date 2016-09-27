@@ -78,8 +78,10 @@
 <style scoped lang='scss'>
 	#message{
 		background-color: #fff;
-		margin: 5px;
-		position: relative;
+		border: 5px solid #e2e2e2;
+		box-sizing: border-box;
+		position: absolute;
+		width:100%;
 		.tab{
 			position: relative;
 			width: 100%;

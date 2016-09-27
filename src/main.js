@@ -22,11 +22,11 @@ require('./css/iconfont/iconfont.css')
 Vue.use(VueRouter)
 
 const router=new VueRouter({
-	hashbang: true
+	hashbang: true,
     // history: true,
     // saveScrollPosition: true,
     // suppressTransitionError: true,
-    // transitionOnLoad:true
+    transitionOnLoad:true
 });
 router.map({
 	'/:tab':{

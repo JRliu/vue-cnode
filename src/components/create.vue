@@ -42,8 +42,10 @@
 				}
 			}
 		},
-		ready:function(){
-			window.scrollTo(0,0);
+		route:{
+			data:function(){
+				window.scrollTo(0,0);
+			}
 		},
 		methods:{
 			publish:function(){
@@ -82,10 +84,14 @@
 
 <style scoped lang='scss'>
 	#create{
+		position: absolute;
+		width: 100%;
 		background-color: #fff;
-		margin:5px;
+		/*margin:5px;*/
+		border: 5px solid #e2e2e2;
 		font-size: .25rem;
 		padding: 5px;
+		box-sizing: border-box;
 		.tab{
 			text-align:left;
 			padding: 10px 0;

@@ -70,7 +70,7 @@
 		padding-top: .4rem;
 		padding-left: .2rem;
 		padding-right: .2rem;
-		position: relative;
+		position: absolute;
 		label{
 			font-size: .4rem;
 			font-weight: 700;

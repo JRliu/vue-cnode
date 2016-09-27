@@ -181,6 +181,10 @@
 </script>
 
 <style scoped lang='scss'>
+	#topics{
+		position: absolute;
+		width: 100%;
+	}
 	#tab{
 		/*height:50px;*/
 		padding: 5px;

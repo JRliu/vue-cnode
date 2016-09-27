@@ -2,7 +2,7 @@
   <div id="app">
     <vue-header></vue-header>
     <div class="space"></div>
-    <router-view keep-alive></router-view>
+    <router-view keep-alive transition='slide'></router-view>
     <go-top :bottom='".3rem"' :right='"0"' :screen-num='1.7'></go-top>
     <sidebar v-show='showSidebar' 
              transition='sidebar'
@@ -65,6 +65,20 @@ export default {
     /* .expand-enter 定义进入的开始状态 */
     /* .expand-leave 定义离开的结束状态 */
     .sidebar-enter, .sidebar-leave {
+      transform: translateX(-200px);
+      opacity: 0;
+
+    }
+    .slide-transition {
+      transition: all .5s ease;
+      overflow: hidden;
+      left:0px;
+      opacity: 1;
+    }
+
+    /* .expand-enter 定义进入的开始状态 */
+    /* .expand-leave 定义离开的结束状态 */
+    .slide-enter, .slide-leave {
       transform: translateX(-200px);
       opacity: 0;
 

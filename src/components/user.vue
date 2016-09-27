@@ -115,6 +115,10 @@
 </script>
 
 <style scoped lang='scss'>
+	#userpage{
+		position: absolute;
+		width: 100%;
+	}
 	.introduction{
 		background-color: #fff;
 		margin: 5px;
