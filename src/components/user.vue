@@ -1,5 +1,5 @@
 <template>
-	<div id="userpage">
+	<div id="userpage" v-show='loadState'>
 		<div class="introduction clear">
 			<img :src="user.avatar_url">
 			<span class="username">{{user.loginname}}</span>
@@ -54,7 +54,8 @@
 			return{
 				user:{},
 				active:{},
-				collect:[]
+				collect:[],
+				loadState:false
 			}
 		},
 		computed:{
@@ -66,7 +67,6 @@
 			username:function(val,oldVal){
 				if(!!val&!!oldVal){
 					this.getAll();
-					console.log('user')
 				}
 			}
 		},
@@ -77,11 +77,15 @@
 		},
 		methods:{
 			get:function(url,username,successFn,errorFn){
+				this.$data.loadState=false;
 				this.$http({
 			      method:'GET',
 			      url:url+username
 			    }).then((response)=>{
 			      successFn(response);
+			      setTimeout(()=>{
+			      	  this.$data.loadState=true;
+			      },200)
 			    }).catch((err)=>{
 			      errorFn(err);
 			    })

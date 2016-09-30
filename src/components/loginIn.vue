@@ -2,9 +2,9 @@
 	<div id="loginIn">
 		<form>
 			<label>Access Token</label>
-			<textarea rows="2" v-model='accessToken'
+			<textarea rows="1" v-model='accessToken'
 				   class="password">ce3d4bcc-f85b-4c39-96f3-251c49d7416d</textarea>
-			<mt-button class='logBtn' size='large'
+			<mt-button class='logBtn' size='large' type='primary'
 						@click.prevent='loginIn(this.accessToken)'
 						>
 						登陆
@@ -64,9 +64,9 @@
 
 <style scoped lang='scss'>
 	#loginIn{
-		border: 2px solid #e2e2e2;
+		border: 5px solid #e2e2e2;
 		background-color: #fff;
-		margin-top: 10px;
+		/*margin-top: 10px;*/
 		padding-top: .4rem;
 		padding-left: .2rem;
 		padding-right: .2rem;
@@ -76,13 +76,14 @@
 			font-weight: 700;
 			display: block;
 			text-align: left;
-			padding-left: 10%;
 		}
 		.password{
-			padding: 5px 20px;
-			font-size: .5rem;
+			color: #2e2e2e;
+			padding: 5px 10px;
+			font-size: .3rem;
 			font-family: "monospace";
-			width: 85%;
+			width: 100%;
+			box-sizing: border-box;
 			display: block;
 			margin:0 auto;
 			border-radius: 5px;

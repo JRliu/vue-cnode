@@ -1,5 +1,5 @@
 <template>
-	<div id="content">
+	<div id="content" v-show='loadState'>
 		<div class="panel ">
 		<!-- 主题信息 -->
 			<div class="top clear">
@@ -101,7 +101,8 @@
 				myReply:'',
 				myReReply:'',
 				showReplyId:0,
-				showReplyName:''
+				showReplyName:'',
+				loadState:false
 			}
 		},
 		computed:{
@@ -136,13 +137,17 @@
 		methods:{
 			//获取数据
 			getData:function(){
+				this.$data.loadState=false
 				this.$http({
 					url:'https://cnodejs.org/api/v1/topic/'+this.$route.params.id,
 					method:'GET',
 					params:{accesstoken:this.accessToken}
 				}).then((response)=>{
-					let data=response.body.data
-					Vue.set(this,'data',data)
+					let data=response.body.data;
+					Vue.set(this,'data',data);
+					setTimeout(()=>{
+			      	  this.$data.loadState=true;
+			      },200)
 				});
 			},
 			collectToggle:function(){
@@ -259,10 +264,10 @@
 		},
 		route:{
 			data(transition){
-				if(transition.from.name=='tab'){
+				// if(transition.from.name=='tab'){
 					this.getData();
 					document.body.scrollTop=0;
-				}
+				// }
 				
 				// 返回时调整scrolltop到进入内容时的状态
 				if(transition.from.name=='user'&&sessionStorage.contentId==this.id){
@@ -296,12 +301,14 @@
 			.create_at{
 				float: left;
 				font-size: 0.2rem;
+				line-height: 33px;
 			}
 			.tab{
 				padding: 0 .1rem;
 				border-radius:10%;
 				float: left;
 				font-size: 0.2rem;
+				line-height: 33px;
 			}
 			.title{
 				font-size:.35rem;
@@ -324,7 +331,7 @@
 				}
 				span{
 					float: left;
-					line-height: .5rem;
+					line-height: .625rem;
 					font-size: .3rem;
 				}
 			}
@@ -336,7 +343,7 @@
 			}
 		}
 		.replies_count{
-			margin:2px 0;
+			margin:3px 0;
 			background-color: #fff;
 			height:.5rem;
 			line-height: .5rem;
@@ -355,10 +362,10 @@
 		}
 		.replies{
 			.reply{
-				margin-bottom: 2px;
+				margin-bottom: 3px;
+				background-color: #fff;
 			}
 			.author{
-				background-color: #fff;
 				img{
 					height:0.5rem;
 					display: block;
@@ -369,7 +376,7 @@
 				}
 				.name{
 					float: left;
-					line-height: .5rem;
+					line-height: .625rem;
 					font-size: .25rem;
 				}
 				.create_at{
@@ -388,10 +395,9 @@
 				padding-top: 0;
 				background-color: #fff;
 				position: relative;
-
+				
 			}
 			.ups{
-				background-color: #fff;
 				div{
 					float: right;
 					padding-right: 10px;

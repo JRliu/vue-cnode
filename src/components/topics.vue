@@ -1,5 +1,5 @@
 <template>
-	<div id="topics">
+	<div id="topics" v-show='loadState'>
 	<mt-loadmore :bottom-method="loadMore" :top-method="refresh"
 				 :bottom-pull-text="'上拉加载更多'">
 <!-- 顶部标签 -->
@@ -12,23 +12,25 @@
 			</div>
 		</div>
 <!-- 帖子 -->
-		<div class="topic" v-for='topic in topics'>
-			<!-- 头像 -->
-			<img v-lazy="topic.author.avatar_url"   
-				 v-link="{name:'user',params:{username:topic.author.loginname}}">
+		<div class="topic" v-for='topic in topics'
+			 v-link="{name:'topic',params:{id:topic.id}}">
 			<!-- 标签（精华  等） -->
-			<div class="tab" 
-				v-bind:class="{'good':topic.good||topic.top}">
-				{{topic|tabName}}
+			<div class="top">
+				<div class="tab" 
+					v-bind:class="{'good':topic.good||topic.top}">
+					{{topic|tabName}}
+				</div>
+				<span class="last_reply_at">{{topic.last_reply_at|last_reply_at}}</span>
 			</div>
 			<!-- 标题 -->
-			<div class="title"
-				 v-link="{name:'topic',params:{id:topic.id}}">
+			<div class="title">
 				 {{topic.title}}
 			</div>
 			<!-- 浏览次数 -->
-			<div class="last_reply_at">{{topic.last_reply_at|last_reply_at}}</div>
-			<div class="reply_visit">{{topic.reply_count}}/{{topic.visit_count}}</div>
+			<div class="footer">
+				<span class="reply_visit">{{topic.reply_count}}/{{topic.visit_count}}</span>
+				<span class="author">{{topic.author.loginname}}</span>
+			</div>
 		</div>
 		
 	</mt-loadmore>
@@ -51,7 +53,8 @@
 					{cn:'分享',en:'share'},
 					{cn:'提问',en:'ask'},
 					{cn:'招聘',en:'job'}
-				]
+				],
+				loadState:false
 			}
 		},
 		computed:{
@@ -78,12 +81,16 @@
 		methods:{
 		//ajax通用函数，获取分区第一页
 			get:function(page,successFn,errorFn){
+				this.$data.loadState=false;
 				this.$http({
 			      method:'GET',
 			      url:'https://cnodejs.org/api/v1/topics',
 			      params:{'tab':this.$route.params.tab,'page':page}
 			    }).then((response)=>{
 			      successFn(response);
+			      setTimeout(()=>{
+			      	  this.$data.loadState=true;
+			      },300)
 			    }).catch((err)=>{
 			      errorFn(err);
 			    })
@@ -205,62 +212,61 @@
 		}
 	}
 	.topic{
-		height: 1rem;
-		border: 1px solid #e2e2e2;
+		border-width: 3px 5px;
+		border-style:solid;
+		border-color:#e2e2e2;
 		background-color: #fff;
+		padding:5px;
+		position: relative;
 	}
 	.title{
 		font-size: .28rem;
-		font-weight:600;
 		text-align: left;
-		padding-top: .2rem;
-		padding-left: .2rem;
-		width: 70%;
-		float: left;
+		padding: .1rem 0;
+		width: 100%;
 		cursor:pointer; 
 		text-overflow:ellipsis;
-		white-space: nowrap;
+		/*white-space: nowrap;*/
 		overflow: hidden;
 	}
-	.topic .tab{
-		background-color: #e1e1e1;
-		height:.4rem;
-		line-height: .4rem;
-		padding: 0 .1rem;
-		border-radius:10%;
-		top:.2rem;
-		margin-top: .2rem;
-		float: left;
-		font-size: 0.2rem;
+	.top{
+		position: relative;
+		height: .4rem;
+		.tab{
+			position: absolute;
+			left: 0;
+			background-color: #e1e1e1;
+			height:.4rem;
+			width:.5rem;
+			line-height: .4rem;
+			padding: 0 .1rem;
+			border-radius:10%;
+			font-size: 0.2rem;
+		}
+		.last_reply_at{
+			position: absolute;
+			right: 0px;
+			line-height: .4rem;
+		}
+	} 
+	.footer{
+		position: relative;
+		height: 20px;
+		line-height: 20px;
+		span{
+			line-height: 20px;
+			color: #999999;
+			position: absolute;
+		}
+		.reply_visit{
+			right: 0px;
+		}
+		.author{
+			left: 0px;
+		}
 	}
 	.topic .good{
 		background-color: #80bd01;
 		color: #fff;
-	}
-	.last_reply_at{
-		float: right;
-		margin-right: .3rem;
-		color: #999999;
-	}
-	.reply_visit{
-		margin-left: .9rem;
-		float: left;
-		color: #999999;
-	}
-	img{
-		height:0.75rem;
-		width:0.75rem;
-		display: block;
-		padding: .125rem;
-		border-radius: 15%;
-		float: left;
-		cursor:pointer; 
-	}
-	img[lazy=loading] {
-	  height:0.75rem;
-	  width:0.75rem;
-	}
-	.pages{
-		height:50px;
 	}
 </style>
