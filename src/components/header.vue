@@ -37,7 +37,8 @@
 		background-color: #2e2e2e;
 		position: fixed;
 		width: 100%;
-		max-width: 640px;
+		left:0;
+		/*max-width: 640px;*/
 		z-index: 9;
 		color: #ffffff;
 		.logo{
@@ -49,7 +50,7 @@
 			left: 15%;
 		}
 		i{
-			font-size: .6rem;
+			font-size: .4rem;
 			position: absolute;
 			left: 2%;
 			line-height: .675rem;
@@ -59,7 +60,8 @@
 		}
 		span{
 			font-size: .7rem;
-			line-height: .65rem;
+			font-weight: 700;
+			line-height: .6rem;
 			width: .6rem;
 			position: absolute;
 			right: 2%;

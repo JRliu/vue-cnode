@@ -2,7 +2,7 @@
 	<div id="gotop">
 		<div class="btn"
 			 v-show='show'
-			 :style="{opacity:opacity,top:top,right:right,bottom:bottom,left:left}"
+			 :style="{opacity:propOpacity,top:top,right:right,bottom:bottom,left:left}"
 			 @click='scroll_To(scrollTo)'>
 			<i class="iconfont  icon-huidingbu"></i>
 		</div>
@@ -15,7 +15,6 @@
 		    return{
 		      show:false,
 		      onscroll:false,
-		      opacity:this.staticOpacity
 		    }
 		},
 		props:{
@@ -32,15 +31,11 @@
 			//30ms后到达
 			step:{
 				type:Number,
-				default:30
+				default:20
 			},
-			scrollOpacity:{
+			propOpacity:{
 				type:Number,
-				default:0
-			},
-			staticOpacity:{
-				type:Number,
-				default:0.8
+				default:0.6
 			},
 			//位置参数4个
 			top:{
@@ -61,28 +56,11 @@
 		ready:function(){
 			let _this=this
 			let onScroll=function(){
-					//滚动时半透明
-			      _this.opacity=_this.scrollOpacity;
-			      //静止后不透明
-			      let old=document.documentElement.scrollTop||document.body.scrollTop;
-			      let check=()=>{
-			      	if(document.body.scrollTop||document.documentElement.scrollTop==old){
-			      		_this.opacity=_this.staticOpacity;
-			      	}
-			      }
-			      setTimeout(check,100)
 			      //滚动到的scrolltop显示
 			      if(document.documentElement.scrollTop||document.body.scrollTop>window.screen.height*_this.screenNum){
 			          _this.show=true
 			      }else{_this.show=false;}
 				}
-		// touchmove时透明度	
-			window.addEventListener( 'touchstart', function( e ){
-				window.addEventListener( 'touchmove', function( e ){
-					onScroll();
-					})
-			})
-		//onscroll时透明度
 			window.onscroll=()=>{
 				onScroll();
 			}

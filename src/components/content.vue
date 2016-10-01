@@ -23,7 +23,8 @@
 				</div>
 				
 				<div class="main-content"
-					 v-html='data.content'>
+					 v-html='data.content'
+					 @click='showPic'>
 				</div>
 				<mt-button :type="isCollect" size='small' 
 							v-if='loginStatus'
@@ -75,7 +76,7 @@
 			</div>
 		</div>
 
-
+		<show-pic v-ref:showPic></show-pic>
 	</div>
 </template>
 
@@ -86,10 +87,12 @@
 	import 'mint-ui/lib/button/style.css'
 	import { Toast } from 'mint-ui'
 	import 'mint-ui/lib/toast/style.css'
+	import ShowPic from './showPic'
 	
 	export default{
 		components:{
-			MtButton:Button
+			MtButton:Button,
+			ShowPic
 		},
 		data(){
 			return{
@@ -147,7 +150,7 @@
 					Vue.set(this,'data',data);
 					setTimeout(()=>{
 			      	  this.$data.loadState=true;
-			      },200)
+			      },300)
 				});
 			},
 			collectToggle:function(){
@@ -257,17 +260,22 @@
 				if (isiOS) {
 			      	setTimeout(scrollBottom, 500)
 				}
+			},
+			showPic:function(e){
+				if(e.target.nodeName==='IMG'){
+					this.$refs.showpic.$data.show=true;
+					this.$refs.showpic.$data.src=e.target.src
+				}
 			}
-		},
-		ready:function(){
-			this.getData();
 		},
 		route:{
 			data(transition){
-				// if(transition.from.name=='tab'){
-					this.getData();
-					document.body.scrollTop=0;
-				// }
+				this.getData();
+				if(transition.from.name=='tab'){
+					setTimeout(()=>{
+						document.body.scrollTop=0;
+					},500)
+				}
 				
 				// 返回时调整scrolltop到进入内容时的状态
 				if(transition.from.name=='user'&&sessionStorage.contentId==this.id){
@@ -322,16 +330,16 @@
 			padding-bottom: 10px;
 			.author{
 				img{
-					height:0.5rem;
+					height:0.7rem;
 					display: block;
 					padding: .125rem;
-					border-radius: 15%;
+					border-radius: 20%;
 					float: left;
 					cursor:pointer; 
 				}
 				span{
 					float: left;
-					line-height: .625rem;
+					line-height: .925rem;
 					font-size: .3rem;
 				}
 			}
@@ -370,13 +378,13 @@
 					height:0.5rem;
 					display: block;
 					padding: .125rem;
-					border-radius: 15%;
+					border-radius: 20%;
 					float: left;
 					cursor:pointer; 
 				}
 				.name{
 					float: left;
-					line-height: .625rem;
+					line-height: .75rem;
 					font-size: .25rem;
 				}
 				.create_at{

@@ -79,7 +79,7 @@
 		}
 		.password{
 			color: #2e2e2e;
-			padding: 5px 10px;
+			padding: 5px;
 			font-size: .3rem;
 			font-family: "monospace";
 			width: 100%;

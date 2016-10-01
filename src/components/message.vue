@@ -2,11 +2,11 @@
 	<div id="message">
 		<div class="tab clear">
 			<div @click='changeTab("hasnot_read_messages")'
-			     :class="{'active':this.active==this.data.hasnot_read_messages}">
+			     :class="{'active':this.activeName=='hasnot_read_messages'}">
 			     未读消息
 			</div>
 			<div @click='changeTab("has_read_messages")'
-			     :class="{'active':this.active==this.data.has_read_messages}">
+			     :class="{'active':this.activeName=='has_read_messages'}">
 			     已读消息
 			</div>
 		</div>
@@ -39,6 +39,7 @@
 		data(){
 			return{
 				active:[],
+				activeName:'hasnot_read_messages',
 				data:{}
 			}
 		},
@@ -65,6 +66,7 @@
 			},
 			changeTab:function(name){
 				this.$set('active',this.data[name])
+				this.$data.activeName=name
 			}
 		},
 		route:{

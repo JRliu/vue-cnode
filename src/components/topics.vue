@@ -1,5 +1,5 @@
 <template>
-	<div id="topics" v-show='loadState'>
+	<div id="topics">
 	<mt-loadmore :bottom-method="loadMore" :top-method="refresh"
 				 :bottom-pull-text="'上拉加载更多'">
 <!-- 顶部标签 -->
@@ -17,7 +17,7 @@
 			<!-- 标签（精华  等） -->
 			<div class="top">
 				<div class="tab" 
-					v-bind:class="{'good':topic.good||topic.top}">
+					v-bind:class="[tabClass(topic)]">
 					{{topic|tabName}}
 				</div>
 				<span class="last_reply_at">{{topic.last_reply_at|last_reply_at}}</span>
@@ -53,8 +53,7 @@
 					{cn:'分享',en:'share'},
 					{cn:'提问',en:'ask'},
 					{cn:'招聘',en:'job'}
-				],
-				loadState:false
+				]
 			}
 		},
 		computed:{
@@ -81,16 +80,12 @@
 		methods:{
 		//ajax通用函数，获取分区第一页
 			get:function(page,successFn,errorFn){
-				this.$data.loadState=false;
 				this.$http({
 			      method:'GET',
 			      url:'https://cnodejs.org/api/v1/topics',
 			      params:{'tab':this.$route.params.tab,'page':page}
 			    }).then((response)=>{
 			      successFn(response);
-			      setTimeout(()=>{
-			      	  this.$data.loadState=true;
-			      },300)
 			    }).catch((err)=>{
 			      errorFn(err);
 			    })
@@ -138,6 +133,13 @@
 				this.get(page,successFn,errorFn);
 
 				document.body.scrollTop=0;
+			},
+			tabClass:function(topic){
+				if(topic.top){ return 'topTab'}
+				else if(topic.good){return 'good'}
+				else if(topic.tab=='share'){return 'share'}
+				else if(topic.tab=='ask'){return 'ask'}
+				else if(topic.tab=='job'){return 'job'}
 			}
 		},
 		vuex:{
@@ -218,6 +220,9 @@
 		background-color: #fff;
 		padding:5px;
 		position: relative;
+		&:active{
+			background-color:#e2e2e2;
+		}
 	}
 	.title{
 		font-size: .28rem;
@@ -265,8 +270,26 @@
 			left: 0px;
 		}
 	}
-	.topic .good{
-		background-color: #80bd01;
-		color: #fff;
+	.topic {
+		.topTab{
+			background-color: #c92252;
+			color: #fff;
+		}
+		.good{
+			background-color: #80bd01;
+			color: #fff;
+		}
+		.share{
+			background-color: #0039b3;
+			color: #fff;
+		}
+		.ask{
+			background-color: #2096ba;
+			color: #fff;
+		}
+		.job{
+			background-color: #424e69;
+			color: #fff;
+		}
 	}
 </style>
