@@ -9,6 +9,7 @@
              >
     </sidebar> 
     <mask v-show='showSidebar'></mask>
+    
   </div>
 </template>
 
