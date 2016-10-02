@@ -2,7 +2,7 @@
 	<div id="header">
 		<i class="iconfont icon-meun"
 		   @click='showSidebar'></i>
-		<img src="https://cnodejs.org/public/images/cnodejs_light.svg" alt="" class="logo">
+		<img src="https://cnodejs.org/public/images/cnodejs_light.svg" alt="cnode" class="logo">
 		<span v-if='loginStatus' @click='create'
 			  v-link='{path:"/topic/create"}'>+</span>
 	</div>
@@ -61,10 +61,12 @@
 		span{
 			font-size: .7rem;
 			font-weight: 700;
-			line-height: .6rem;
+			line-height: .63rem;
 			width: .6rem;
 			position: absolute;
 			right: 2%;
+			vertical-align:text-top;
+			font-family:'Microsoft YaHei';
 		}
 	}
 	

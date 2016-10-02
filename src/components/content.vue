@@ -38,8 +38,8 @@
 				<div class="count">共{{data.reply_count}}条回复</div>
 			</div>
 		<!-- 所有回复 -->
-			<div class="replies">
-				<div class="reply"
+			<ul class="replies">
+				<li class="reply"
 					 v-for='re in data.replies'>
 					<div class="author clear"
 						 v-link="{name:'user',params:{username:re.author.loginname}}">
@@ -63,8 +63,8 @@
 						<mt-button type='default' size='small'
 									@click="reReply(re.id)">回复该楼</mt-button>
 					</div>
-				</div>
-			</div>
+				</li>
+			</ul>
 		<!-- 回复楼主 -->
 			<div class="myReply" v-if='loginStatus' >
 				<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
@@ -149,8 +149,8 @@
 					let data=response.body.data;
 					Vue.set(this,'data',data);
 					setTimeout(()=>{
-			      	  this.$data.loadState=true;
-			      },300)
+				      	this.$data.loadState=true;
+				    },300)
 				});
 			},
 			collectToggle:function(){

@@ -33,14 +33,14 @@
 					@click='goMessage'></i>
 			</div>
 		<!-- 分区按钮 -->
-		<div class="btns">
-			<div class="btn"
+		<ul class="btns">
+			<li class="btn"
 				 v-for='btn in btns'
 				 v-link="{name:'tab',params:{tab:btn.en}}"
 				 @click='goList(btn)'>
 				{{btn.name}}
-			</div>
-		</div>
+			</li>
+		</ul>
 	</div>
 </template>
 
@@ -160,9 +160,10 @@
 			}
 			.icon-xiaoxi{
 				position: absolute;
-				margin-left: 10px;
-				font-size: .4rem;
-				/*line-height: 1rem;*/
+				bottom: 0px;
+				margin: 5px;
+				font-size: 30px;
+				line-height: 33px;
 				/*&:before{
 					position:relative;
 					top:4px;

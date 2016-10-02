@@ -3,36 +3,37 @@
 	<mt-loadmore :bottom-method="loadMore" :top-method="refresh"
 				 :bottom-pull-text="'上拉加载更多'">
 <!-- 顶部标签 -->
-		<div id="tab" class="clear">
-			<div v-for='tab in tabs'>
+		<ul id="tab" class="clear">
+			<li v-for='tab in tabs'>
 				<p class="tab" 
 				   v-link='{name:"tab",params:{tab:tab.en},activeClass:"active"}'
 				   >{{tab.cn}}
 				</p>
-			</div>
-		</div>
+			</li>
+		</ul>
 <!-- 帖子 -->
-		<div class="topic" v-for='topic in topics'
-			 v-link="{name:'topic',params:{id:topic.id}}">
-			<!-- 标签（精华  等） -->
-			<div class="top">
-				<div class="tab" 
-					v-bind:class="[tabClass(topic)]">
-					{{topic|tabName}}
+		<ul>
+			<li class="topic" v-for='topic in topics'
+				 v-link="{name:'topic',params:{id:topic.id}}">
+				<!-- 标签（精华  等） -->
+				<div class="top">
+					<div class="tab" 
+						v-bind:class="[tabClass(topic)]">
+						{{topic|tabName}}
+					</div>
+					<span class="last_reply_at">{{topic.last_reply_at|last_reply_at}}</span>
 				</div>
-				<span class="last_reply_at">{{topic.last_reply_at|last_reply_at}}</span>
-			</div>
-			<!-- 标题 -->
-			<div class="title">
-				 {{topic.title}}
-			</div>
-			<!-- 浏览次数 -->
-			<div class="footer">
-				<span class="reply_visit">{{topic.reply_count}}/{{topic.visit_count}}</span>
-				<span class="author">{{topic.author.loginname}}</span>
-			</div>
-		</div>
-		
+				<!-- 标题 -->
+				<div class="title">
+					 {{topic.title}}
+				</div>
+				<!-- 浏览次数 -->
+				<div class="footer">
+					<span class="reply_visit">{{topic.reply_count}}/{{topic.visit_count}}</span>
+					<span class="author">{{topic.author.loginname}}</span>
+				</div>
+			</li>
+		</ul>
 	</mt-loadmore>
 	</div>
 </template>
