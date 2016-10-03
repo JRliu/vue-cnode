@@ -4,7 +4,7 @@
 		   @click='showSidebar'></i>
 		<img src="https://cnodejs.org/public/images/cnodejs_light.svg" alt="cnode" class="logo">
 		<span v-if='loginStatus' @click='create'
-			  v-link='{path:"/topic/create"}'>+</span>
+			  v-link='{path:"/topic/create"}'></span>
 	</div>
 </template>
 
@@ -47,26 +47,32 @@
 			float: left;
 			height:50%;
 			top:25%;
-			left: 15%;
+			left: 38%;
 		}
 		i{
 			font-size: .4rem;
 			position: absolute;
 			left: 2%;
-			line-height: .675rem;
+			line-height: .7rem;
 			&:before{
 				position: relative;
+				top:-.02rem;
 			}
 		}
 		span{
-			font-size: .7rem;
+			font-size: .6rem;
 			font-weight: 700;
-			line-height: .63rem;
+			line-height: .7rem;
 			width: .6rem;
 			position: absolute;
 			right: 2%;
 			vertical-align:text-top;
 			font-family:'Microsoft YaHei';
+			&:before{
+				content:'+';
+				position: relative;
+				top:-0.05rem;
+			}
 		}
 	}
 	

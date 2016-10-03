@@ -1,7 +1,9 @@
 import Vue from 'vue'
-import App from './App'
+import Wrap from './wrap'
+import Welcome from './components/welcome'
 import VueResource from 'vue-resource'
 import VueRouter from 'vue-router'
+
 // 懒加载
 import { Lazyload } from 'mint-ui';
 import 'mint-ui/lib/lazyload/style.css'
@@ -28,55 +30,68 @@ const router=new VueRouter({
     transitionOnLoad:true
 });
 router.map({
-	'/:tab':{
-		name:'tab',
+	'/welcome':{
+		component:Welcome
+	},
+	'/':{
 		component(resolve){
-					require(['./components/topics.vue'],resolve)
-				},
+			require(['./App.vue'],resolve)
+		},
 		subRoutes:{
-			'/:page':{
-				name:'page',
+			'/:tab':{
+				name:'tab',
 				component(resolve){
 					require(['./components/topics.vue'],resolve)
+				},
+				subRoutes:{
+					'/:page':{
+						name:'page',
+						component(resolve){
+							require(['./components/topics.vue'],resolve)
+						}
+					}
+				}
+			},
+			'/topic/:id':{
+				name:'topic',
+				component(resolve){
+					require(['./components/content.vue'],resolve)
+				}
+			},
+			'/topic/create':{
+				component(resolve){
+					require(['./components/create.vue'],resolve)
+				}
+			},
+			'/user/:username':{
+				name:'user',
+				component(resolve){
+					require(['./components/user.vue'],resolve)
+				}
+			},
+			'/loginIn':{
+				name:'loginIn',
+				component(resolve){
+					require(['./components/loginIn.vue'],resolve)
+				}
+			},
+			'/message':{
+				name:'message',
+				component(resolve){
+					require(['./components/message.vue'],resolve)
 				}
 			}
 		}
-	},
-	'/topic/:id':{
-		name:'topic',
-		component(resolve){
-			require(['./components/content.vue'],resolve)
-		}
-	},
-	'/topic/create':{
-		component(resolve){
-			require(['./components/create.vue'],resolve)
-		}
-	},
-	'/user/:username':{
-		name:'user',
-		component(resolve){
-			require(['./components/user.vue'],resolve)
-		}
-	},
-	'/loginIn':{
-		name:'loginIn',
-		component(resolve){
-			require(['./components/loginIn.vue'],resolve)
-		}
-	},
-	'/message':{
-		name:'message',
-		component(resolve){
-			require(['./components/message.vue'],resolve)
-		}
 	}
+	
 })
 
 router.redirect({
-	'*':'/all'
+	'/':'/welcome',
+	'*':'/welcome'
 })
 router.alias({
 	
 })
-router.start(App,'#app')
+router.start(Wrap,'#wrap')
+// router.start(Welcome,'#app')

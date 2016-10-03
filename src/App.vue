@@ -9,7 +9,6 @@
              >
     </sidebar> 
     <mask v-show='showSidebar'></mask>
-    
   </div>
 </template>
 
@@ -81,6 +80,5 @@ export default {
     .slide-enter, .slide-leave {
       transform: translateX(-200px);
       opacity: 0;
-
     }
 </style>
