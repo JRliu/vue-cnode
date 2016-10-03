@@ -38,16 +38,17 @@
 		position: fixed;
 		width: 100%;
 		left:0;
-		/*max-width: 640px;*/
 		z-index: 9;
 		color: #ffffff;
+		text-align: center;
 		.logo{
 			display: block;
 			position: absolute;
 			float: left;
 			height:50%;
 			top:25%;
-			left: 38%;
+			left: 50%;
+			margin-left: -.7rem;
 		}
 		i{
 			font-size: .4rem;
@@ -71,7 +72,7 @@
 			&:before{
 				content:'+';
 				position: relative;
-				top:-0.05rem;
+				/*top:-0.05rem;*/
 			}
 		}
 	}

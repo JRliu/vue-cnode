@@ -81,6 +81,7 @@
 	#message{
 		background-color: #fff;
 		border: 5px solid #e2e2e2;
+		border-width: 2px 1px;
 		box-sizing: border-box;
 		position: absolute;
 		width:100%;
@@ -109,6 +110,9 @@
 				line-height: .8rem;
 				font-size: .27rem;
 				border-bottom:1px solid #e2e2e2;
+			}
+			div:last-of-type{
+				border-right: 0;
 			}
 		}
 		.list{

@@ -40,17 +40,7 @@ router.map({
 		subRoutes:{
 			'/:tab':{
 				name:'tab',
-				component(resolve){
-					require(['./components/topics.vue'],resolve)
-				},
-				subRoutes:{
-					'/:page':{
-						name:'page',
-						component(resolve){
-							require(['./components/topics.vue'],resolve)
-						}
-					}
-				}
+				component:require('./components/topics.vue')
 			},
 			'/topic/:id':{
 				name:'topic',

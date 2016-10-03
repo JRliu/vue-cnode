@@ -87,8 +87,8 @@
 		position: absolute;
 		width: 100%;
 		background-color: #fff;
-		/*margin:5px;*/
-		border: 5px solid #e2e2e2;
+		border: 1px solid #e2e2e2;
+		border-width: 2px 1px;
 		font-size: .25rem;
 		padding: 5px;
 		box-sizing: border-box;

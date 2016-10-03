@@ -3,14 +3,14 @@
 	<mt-loadmore :bottom-method="loadMore" :top-method="refresh"
 				 :bottom-pull-text="'上拉加载更多'">
 <!-- 顶部标签 -->
-		<ul id="tab" class="clear">
+		<!-- <ul id="tab" class="clear">
 			<li v-for='tab in tabs'>
 				<p class="tab" 
 				   v-link='{name:"tab",params:{tab:tab.en},activeClass:"active"}'
 				   >{{tab.cn}}
 				</p>
 			</li>
-		</ul>
+		</ul> -->
 <!-- 帖子 -->
 		<ul>
 			<li class="topic" v-for='topic in topics'
@@ -215,7 +215,7 @@
 		}
 	}
 	.topic{
-		border-width: 3px 5px;
+		border-width: 2px 1px;
 		border-style:solid;
 		border-color:#e2e2e2;
 		background-color: #fff;
@@ -223,6 +223,7 @@
 		position: relative;
 		&:active{
 			background-color:#e2e2e2;
+			color: #fff;
 		}
 	}
 	.title{

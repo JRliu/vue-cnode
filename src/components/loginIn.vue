@@ -65,6 +65,7 @@
 <style scoped lang='scss'>
 	#loginIn{
 		border: 5px solid #e2e2e2;
+		border-width: 2px 1px;
 		background-color: #fff;
 		/*margin-top: 10px;*/
 		padding-top: .4rem;

@@ -125,7 +125,7 @@
 	}
 	.introduction{
 		background-color: #fff;
-		margin: 5px;
+		margin: 2px 1px;
 		padding: 10px;
 		position: relative;
 		img{
@@ -156,7 +156,7 @@
 	}
 	.recent{
 		background-color: #fff;
-		margin: 5px;
+		margin: 4px 1px;
 		position: relative;
 		.tab{
 			position: relative;
@@ -184,6 +184,9 @@
 			line-height: .8rem;
 			font-size: .27rem;
 			border-bottom:1px solid #e2e2e2;
+		}
+		.tab div:last-of-type{
+			border-right: 0px;
 		}
 		.content{
 			.item{

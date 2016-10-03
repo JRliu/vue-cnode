@@ -38,6 +38,7 @@
 				 v-for='btn in btns'
 				 v-link="{name:'tab',params:{tab:btn.en}}"
 				 @click='goList(btn)'>
+				 <span :class="'icon-'+btn.icon" class="iconfont"></span>
 				{{btn.name}}
 			</li>
 		</ul>
@@ -60,11 +61,11 @@
 		data(){
 			return{
 				btns:[
-					{name:'首页',en:'all'},
-					{name:'精华',en:'good'},
-					{name:'分享',en:'share'},
-					{name:'问答',en:'ask'},
-					{name:'招聘',en:'job'},
+					{name:'首页',en:'all',icon:'quanbu'},
+					{name:'精华',en:'good',icon:'jinghua'},
+					{name:'分享',en:'share',icon:'fenxiang'},
+					{name:'问答',en:'ask',icon:'tiwen'},
+					{name:'招聘',en:'job',icon:'zhaopin'},
 				]
 			}
 		},
@@ -174,6 +175,13 @@
 			border-bottom:1px solid #e2e2e2;
 			font-size: .4rem;
 			line-height: .7rem;
+			.iconfont{
+				font-size: .4rem;
+			}
+			&:active{
+				background-color: #e2e2e2;
+				color: #fff;
+			}
 		}
 	}
 	
