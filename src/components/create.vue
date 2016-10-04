@@ -1,7 +1,7 @@
 <template>
 	<div id="create">
 		<div class="tab">
-		 选择板块:
+			选择板块:
 			<select v-model='tab'>
 				<option selected value='share'>分享</option>
 				<option value='ask'>提问</option>
@@ -49,20 +49,27 @@
 		},
 		methods:{
 			publish:function(){
-				this.$http({
-					method:'POST',
-					url:'https://cnodejs.org/api/v1/topics',
-					body:{accesstoken:this.password,
-						  titel:this.title,
-						  tab:this.tab,
-						  content:this.content}
-				}).then((response)=>{
-					//成功
-					successFn(response);
-				}).catch((err)=>{
-					//失败
-					errorFn(err)
-				})
+				if(this.title.trim()==''){
+					Toast({message:'标题不能为空',duration:1000})
+				}else if(this.content.trim()==''){
+					Toast({message:'内容不能为空',duration:1000})
+				}else{
+					this.$http({
+						method:'POST',
+						url:'https://cnodejs.org/api/v1/topics',
+						body:{accesstoken:this.password,
+							titel:this.title,
+							tab:this.tab,
+							content:this.content}
+						}).then((response)=>{
+							//成功
+							successFn(response);
+						}).catch((err)=>{
+							//失败
+							errorFn(err)
+						})
+					}
+
 				//成功时执行
 				let successFn=(response)=>{
 					Toast({message:'发表成功',duration:1000})
@@ -98,13 +105,30 @@
 			select{
 				width: 50%;
 				padding: 4px;
+				&:focus{
+					outline:0;
+					border-color: #66afe9; 
+					outline: 0; 
+					-webkit-box-shadow: inset 0 0px 0px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6); 
+					box-shadow: inset 0 0px 0px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6);
+				}
+
 			}
 		}
 		.title{
 			input{
 				width: 96%;
-				border-radius: 3px;
 				padding: 5px;
+				border-top: 0;
+				border-left:0;
+				border-right:0;
+				border-bottom: 1px solid #999;
+				&:focus{
+					border-color: #66afe9; 
+					outline: 0; 
+					-webkit-box-shadow: inset 0 0px 0px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6); 
+					box-shadow: inset 0 0px 0px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6); 
+				}
 			}
 		}
 		.content{
@@ -114,6 +138,12 @@
 				border-radius: 3px;
 				padding: 5px;
 				resize: none;
+				&:focus{
+					border-color: #66afe9; 
+					outline: 0;
+					-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6); 
+					box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 5px rgba(102, 175, 233, 0.6); 
+				}
 			}
 		}
 	}

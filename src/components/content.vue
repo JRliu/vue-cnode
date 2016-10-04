@@ -1,7 +1,7 @@
 <template>
 	<div id="content" v-show='loadState'>
 		<div class="panel ">
-		<!-- 主题信息 -->
+			<!-- 主题信息 -->
 			<div class="top clear">
 				<div class="title">
 					<p>{{data.title}}</p>
@@ -9,75 +9,75 @@
 				<div class="create_at">•发表于 {{data.create_at|last_reply_at}}</div>
 				<div class="tab">•来自 {{data|tabName}}</div>
 				<mt-button :type="isCollect" size='small' style='float:right'
-							v-if='loginStatus'
-						   @click='collectToggle'>
+				v-if='loginStatus'
+				@click='collectToggle'>
 				{{collectBtn}}
-				</mt-button>
-			</div>
+			</mt-button>
+		</div>
 		<!-- 主题内容 -->
-			<div class="content clear">
-				<div class="author clear"
-					 v-link="{name:'user',params:{username:data.author.loginname}}">
-					<img :src="data.author.avatar_url">
-					<span>{{data.author.loginname}}</span>
-				</div>
-				
-				<div class="main-content"
-					 v-html='data.content'
-					 @click='showPic'>
-				</div>
-				<mt-button :type="isCollect" size='small' 
-							v-if='loginStatus'
-						   @click='replyFocus'>
-					回复
-				</mt-button>
-			</div>
-
-		<!-- 回复数量 -->
-			<div class="replies_count">
-				<div class="count">共{{data.reply_count}}条回复</div>
-			</div>
-		<!-- 所有回复 -->
-			<ul class="replies">
-				<li class="reply"
-					 v-for='re in data.replies'>
-					<div class="author clear"
-						 v-link="{name:'user',params:{username:re.author.loginname}}">
-						<img :src="re.author.avatar_url">
-						<span class="name">{{re.author.loginname}}</span>
-						<span class="create_at">{{$index}}楼&nbsp&nbsp&nbsp{{re.create_at|last_reply_at}}</span>
-					</div>
-					<div class="content"
-						 v-html='re.content|replaceLink'>
-					</div>
-					<!-- 点赞和回复评论 -->
-					<div class="ups clear" v-if='loginStatus'>
-						<div @click='ups(re.id,re.ups)'>{{upsText(re)}}({{re.ups.length}})</div>
-						<div @click='showReply(re.id,re.author.loginname)'>回复</div>
-					</div>
-					<!-- 回复该楼 -->
-					<div class="myReply" v-if='re.id===showReplyId'>
-						<textarea name="myReply" class="myReplyText" rows="3" required
-								  v-model='myReReply' id="reReply"
-								  @click='iosScrollTo'>@{{showReplyName}}  </textarea>
-						<mt-button type='default' size='small'
-									@click="reReply(re.id)">回复该楼</mt-button>
-					</div>
-				</li>
-			</ul>
-		<!-- 回复楼主 -->
-			<div class="myReply" v-if='loginStatus' >
-				<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
-						  placeholder="快来回复楼主吧！" required
-						  v-model='myReply'
-						  @click='iosScrollTo'></textarea>
-				<mt-button type='primary' size='large'
-							@click='reply'>发表</mt-button>
-			</div>
+		<div class="content clear">
+			<div class="author clear"
+			v-link="{name:'user',params:{username:data.author.loginname}}">
+			<img :src="data.author.avatar_url">
+			<span>{{data.author.loginname}}</span>
 		</div>
 
-		<show-pic v-ref:showPic></show-pic>
+		<div class="main-content"
+		v-html='data.content'
+		@click='showPic'>
 	</div>
+	<mt-button :type="isCollect" size='small' 
+	v-if='loginStatus'
+	@click='replyFocus'>
+	回复
+</mt-button>
+</div>
+
+<!-- 回复数量 -->
+<div class="replies_count">
+	<div class="count">共{{data.reply_count}}条回复</div>
+</div>
+<!-- 所有回复 -->
+<ul class="replies">
+	<li class="reply"
+	v-for='re in data.replies'>
+	<div class="author clear"
+	v-link="{name:'user',params:{username:re.author.loginname}}">
+	<img :src="re.author.avatar_url">
+	<span class="name">{{re.author.loginname}}</span>
+	<span class="create_at">{{$index}}楼&nbsp&nbsp&nbsp{{re.create_at|last_reply_at}}</span>
+</div>
+<div class="content"
+v-html='re.content|replaceLink'>
+</div>
+<!-- 点赞和回复评论 -->
+<div class="ups clear" v-if='loginStatus'>
+	<div @click='ups(re.id,re.ups)'>{{upsText(re)}}({{re.ups.length}})</div>
+	<div @click='showReply(re.id,re.author.loginname)'>回复</div>
+</div>
+<!-- 回复该楼 -->
+<div class="myReply" v-if='re.id===showReplyId'>
+	<textarea name="myReply" class="myReplyText" rows="3" required
+	v-model='myReReply' id="reReply"
+	@click='iosScrollTo'>@{{showReplyName}}  </textarea>
+	<mt-button type='default' size='small'
+	@click="reReply(re.id)">回复该楼</mt-button>
+</div>
+</li>
+</ul>
+<!-- 回复楼主 -->
+<div class="myReply" v-if='loginStatus' >
+	<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
+	placeholder="快来回复楼主吧！" required
+	v-model='myReply'
+	@click='iosScrollTo'></textarea>
+	<mt-button type='primary' size='large'
+	@click='reply'>发表</mt-button>
+</div>
+</div>
+
+<show-pic v-ref:showPic></show-pic>
+</div>
 </template>
 
 <script>
@@ -149,24 +149,24 @@
 					let data=response.body.data;
 					Vue.set(this,'data',data);
 					setTimeout(()=>{
-				      	this.$data.loadState=true;
-				    },300)
+						this.$data.loadState=true;
+					},300)
 				});
 			},
 			collectToggle:function(){
 			//收藏、取消收藏
-				let toggle=(url,boolean,succ)=>{
-					this.$http({
-						url:'https://cnodejs.org/api/v1/topic_collect/'+url,
-						method:'POST',
-						body:{accesstoken:this.accessToken,
-							  topic_id:this.data.id}
+			let toggle=(url,boolean,succ)=>{
+				this.$http({
+					url:'https://cnodejs.org/api/v1/topic_collect/'+url,
+					method:'POST',
+					body:{accesstoken:this.accessToken,
+						topic_id:this.data.id}
 					}).then((response)=>{
 						Vue.set(this.data,'is_collect',boolean);
 						succ()
 					}).catch((err)=>{
 						console.warn(err.body)
-						Toast({message:'请求失败，请稍后再试',duration:1000})
+						Toast({message:err.body.error_msg,duration:1000})
 					})
 				}
 				if(!this.data.is_collect){
@@ -182,23 +182,29 @@
 			},
 			//回复楼主
 			reply:function(replyId){
-				this.$http({
-					url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
-					method:'POST',
-					body:{accesstoken:this.accessToken,
-						  content:this.myReply}
-				}).then((response)=>{
-					this.getData();
-					this.myReply='';
-				}).catch((err)=>{
-					console.warn(err.body)
-					
-				})
-			},
-			replyFocus:function(){
-				let reply=document.getElementById('replyAuthor');
-				reply.scrollIntoView();
-			},
+				if(this.myReply.trim()==''){
+					Toast({message:'回复内容不能为空！',duration:1000})
+				}else{
+					console.log(this.myReply)
+					this.$http({
+						url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
+						method:'POST',
+						body:{accesstoken:this.accessToken,
+							content:this.myReply}
+						}).then((response)=>{
+							this.getData();
+							this.myReply='';
+							Toast({message:'发表成功',duration:1000})
+						}).catch((err)=>{
+							console.warn(err.body)
+							Toast({message:err.body.error_msg,duration:1000})
+						})
+					}
+				},
+				replyFocus:function(){
+					let reply=document.getElementById('replyAuthor');
+					reply.scrollIntoView();
+				},
 			//点赞
 			ups:function(id,ups){
 				this.$http({
@@ -214,30 +220,36 @@
 					}
 				}).catch((err)=>{
 					console.warn(err.body)
-					Toast({message:'请求失败，请稍后再试',duration:1000})
+					Toast({message:err.body.error_msg,duration:1000})
 				})
 			},
 			//点赞按钮文字
 			upsText:function(re){
 				if(re.ups.some((item,index,array)=>{
 					return item==this.userId
-				})){return '已赞'}else{return '点赞'}
+				})){return '已点赞'}else{return '点赞'}
 			},
 			//回复某楼
 			reReply:function(replyId){
-				this.$http({
-					url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
-					method:'POST',
-					body:{accesstoken:this.accessToken,
-						  content:this.myReReply,
-						  reply_id:replyId}
-				}).then((response)=>{
-					this.getData();
-					this.showReplyId=0;
-				}).catch((err)=>{
-					console.log(err)
-				})
-			},
+				if(this.myReReply.trim()==''){
+					Toast({message:'回复内容不能为空！',duration:1000})
+				}else{
+					this.$http({
+						url:'https://cnodejs.org/api/v1/topic/'+this.data.id+'/replies',
+						method:'POST',
+						body:{accesstoken:this.accessToken,
+							content:this.myReReply,
+							reply_id:replyId}
+						}).then((response)=>{
+							this.getData();
+							this.showReplyId=0;
+							Toast({message:'发表成功',duration:1000})
+						}).catch((err)=>{
+							console.log(err.body)
+							Toast({message:err.body.error_msg,duration:1000})
+						})
+					}
+				},
 			//显示回复某楼输入框
 			showReply:function(id,name){
 				if(this.showReplyId===id){
@@ -253,12 +265,12 @@
 				let u = navigator.userAgent;
 				let isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 				let scrollBottom=()=> {
-				    let win=document.body.scrollTop;
-				    let el=e.target.offsetTop;
-				    document.body.scrollTop=win+(el-win)-15
+					let win=document.body.scrollTop;
+					let el=e.target.offsetTop;
+					document.body.scrollTop=win+(el-win)-15
 				}
 				if (isiOS) {
-			      	setTimeout(scrollBottom, 500)
+					setTimeout(scrollBottom, 500)
 				}
 			},
 			showPic:function(e){
@@ -278,7 +290,7 @@
 				}
 				
 				// 返回时调整scrolltop到进入内容时的状态
-				if(transition.from.name=='user'&&sessionStorage.contentId==this.id){
+				if(sessionStorage.contentId==this.id){
 					this.$nextTick(()=> {
 						document.body.scrollTop=sessionStorage.contentScrollTop;
 					});
@@ -286,7 +298,7 @@
 			},
 			deactivate(transition){
 				//离开时保存scrolltop
-				if(transition.to.name=='user'){
+				if(transition.to.name!=='tab'){
 					sessionStorage.contentScrollTop = document.body.scrollTop;
 					sessionStorage.contentId=this.id;
 				}
@@ -302,7 +314,7 @@
 		width: 100%;
 	}
 	.panel{
-		margin:5px;
+		margin:2px 1px;
 		.top{
 			padding: 10px;
 			background-color: #fff;

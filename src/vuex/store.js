@@ -37,9 +37,10 @@ export default new Vuex.Store({
 		REFRESH_START(state){
 			state.refreshTopics=!state.refreshTopics;
 		},
-		LOGIN_IN(state,data){
+		LOGIN_IN(state,data,password){
 			state.loginStatus=true;
 			state.userData=data;
+			state.accessToken=password;
 		},
 		LOGIN_OUT(state,data){
 			state.loginStatus=false;

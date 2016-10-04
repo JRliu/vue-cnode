@@ -1,7 +1,7 @@
 <template>
 	<div id="showPic" v-if='show'>
 		<img :src='src'>
-		<div class="close" @click='close'>X</div>
+		<div class="close" @click='close'>+</div>
 	</div>
 </template>
 
@@ -35,6 +35,7 @@
 	#showPic{
 		position: fixed;
 		top: 0px;
+		left:0;
 		width: 100%;
 		height: 100%;
 		background-color: rgba(0,0,0,.8);
@@ -43,7 +44,6 @@
 		padding: 30px;
 		box-sizing: border-box;
 		text-align:center;
-
 		img{
 			position: relative;
 			top:0;
@@ -56,10 +56,11 @@
 		.close{
 			color: #fff;
 			position: fixed;
-			top: 0;
+			top: -15px;
 			right: 0;
-			font-size: 30px;
-			margin-right: 10px;
+			font-size: 40px;
+			margin-right: 2px;
+			transform: rotate(45deg);
 		}
 	}
 </style>

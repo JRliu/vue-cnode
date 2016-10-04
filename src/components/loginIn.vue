@@ -1,8 +1,8 @@
 <template>
 	<div id="loginIn">
 		<form>
-			<label>Access Token</label>
-			<textarea rows="1" v-model='accessToken'
+			<label>请输入Access Token</label>
+			<textarea rows="2" v-model='accessToken'
 				   class="password">ce3d4bcc-f85b-4c39-96f3-251c49d7416d</textarea>
 			<mt-button class='logBtn' size='large' type='primary'
 						@click.prevent='loginIn(this.accessToken)'
@@ -26,7 +26,8 @@
 		},
 		data(){
 			return{
-				accessToken:''
+				accessToken:'',
+				from_path:''
 			}
 		},
 		methods:{
@@ -38,7 +39,8 @@
 				}).then((response)=>{
 					this.successFn(response);
 				}).catch((err)=>{
-					console.warn(err)
+					console.warn(err.body)
+					Toast({message:err.body.error_msg,duration:1000})
 				})
 			},
 			successFn:function(response){
@@ -46,16 +48,21 @@
 				localStorage.setItem('userData',JSON.stringify(response.body));
 				localStorage.setItem('auto-login',true);
 
-				this.loginStatus(response.body);
-				this.$route.router.go({path:'/all'})
+				this.loginStatus(response.body,this.accessToken);
+				this.$route.router.go({path:this.from_path||'/all'})
 				Toast({message:'登陆成功',duration:1000})
 			}
 		},
 		vuex:{
 			actions:{
-				loginStatus:function({dispatch},data){
-					dispatch('LOGIN_IN',data);
+				loginStatus:function({dispatch},data,password){
+					dispatch('LOGIN_IN',data,password);
 				}
+			}
+		},
+		route:{
+			data(transition){
+				this.$set('from_path',transition.from.path)
 			}
 		}
 
@@ -67,28 +74,28 @@
 		border: 5px solid #e2e2e2;
 		border-width: 2px 1px;
 		background-color: #fff;
-		/*margin-top: 10px;*/
-		padding-top: .4rem;
+		padding-top: .6rem;
 		padding-left: .2rem;
 		padding-right: .2rem;
 		position: absolute;
 		label{
 			font-size: .4rem;
 			font-weight: 700;
+			line-height: 50px;
 			display: block;
-			text-align: left;
+			text-align: center;
 		}
 		.password{
 			color: #2e2e2e;
 			padding: 5px;
-			font-size: .3rem;
+			font-size: .4rem;
 			font-family: "monospace";
 			width: 100%;
 			box-sizing: border-box;
 			display: block;
 			margin:0 auto;
 			border-radius: 5px;
-			text-align: left;
+			text-align: center;
 			resize: none;
 		}
 		.logBtn{
