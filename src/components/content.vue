@@ -1,83 +1,94 @@
 <template>
 	<div id="content" v-show='loadState'>
-		<div class="panel ">
+		<article class="panel ">
 			<!-- 主题信息 -->
-			<div class="top clear">
+			<header class="top clear">
 				<div class="title">
 					<p>{{data.title}}</p>
 				</div>
 				<div class="create_at">•发表于 {{data.create_at|last_reply_at}}</div>
 				<div class="tab">•来自 {{data|tabName}}</div>
 				<mt-button :type="isCollect" size='small' style='float:right'
-				v-if='loginStatus'
-				@click='collectToggle'>
-				{{collectBtn}}
-			</mt-button>
-		</div>
+					v-if='loginStatus'
+					@click='collectToggle'>
+					{{collectBtn}}
+				</mt-button>
+			</header>
+
 		<!-- 主题内容 -->
-		<div class="content clear">
-			<div class="author clear"
-			v-link="{name:'user',params:{username:data.author.loginname}}">
-			<img :src="data.author.avatar_url">
-			<span>{{data.author.loginname}}</span>
-		</div>
+			<section class="content clear">
+				<!-- 作者 -->
+				<div class="author clear" v-link="{name:'user',params:{username:data.author.loginname}}">
+					<img :src="data.author.avatar_url">
+					<span>{{data.author.loginname}}</span>
+				</div>
+				
+				<div class="main-content"
+					v-html='data.content'
+					@click='showPic'>
+				</div>
+				<mt-button :type="isCollect" size='small' 
+						v-if='loginStatus'
+						@click='replyFocus'>
+						回复
+				</mt-button>
+			</section>
 
-		<div class="main-content"
-		v-html='data.content'
-		@click='showPic'>
+		<!-- 所有回复 -->
+		  <section>
+		  	<!-- 回复数量 -->
+		  	<header class="replies_count">
+					<div class="count">共{{data.reply_count}}条回复</div>
+				</header>
+				<ul class="replies">
+					<li class="reply" v-for='re in data.replies'>
+						<!-- 楼层信息 -->
+						<div class="author clear"
+							v-link="{name:'user',params:{username:re.author.loginname}}">
+							<img :src="re.author.avatar_url">
+							<span class="name">{{re.author.loginname}}</span>
+							<span class="create_at">
+								{{$index}}楼&nbsp&nbsp&nbsp{{re.create_at|last_reply_at}}
+							</span>
+						</div>
+						<!-- 回复内容 -->
+						<div class="content" v-html='re.content|replaceLink'></div>
+						
+						<!-- 点赞和回复评论 -->
+						<div class="ups clear" v-if='loginStatus'>
+							<div @click='ups(re.id,re.ups)'>{{upsText(re)}}({{re.ups.length}})</div>
+							<div @click='showReply(re.id,re.author.loginname)'>回复</div>
+						</div>
+					<!-- 回复该楼输入框 -->
+						<div class="myReply" v-if='re.id===showReplyId'>
+							<textarea name="myReply" class="myReplyText" rows="3" required
+								v-model='myReReply' id="reReply"
+								@click='iosScrollTo'>@{{showReplyName}}  </textarea>
+							<mt-button type='default' size='small'
+								@click="reReply(re.id)">
+								回复该楼
+							</mt-button>
+						</div>
+					</li>
+				</ul>
+		  </section>
+
+			<!-- 回复楼主输入框 -->
+			<section>
+				<div class="myReply" v-if='loginStatus' >
+					<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
+					placeholder="快来回复楼主吧！" required
+					v-model='myReply'
+					@click='iosScrollTo'></textarea>
+					<mt-button type='primary' size='large'
+					@click='reply'>发表</mt-button>
+				</div>
+			</section>
+
+		</article>
+
+		<show-pic v-ref:showPic></show-pic>
 	</div>
-	<mt-button :type="isCollect" size='small' 
-	v-if='loginStatus'
-	@click='replyFocus'>
-	回复
-</mt-button>
-</div>
-
-<!-- 回复数量 -->
-<div class="replies_count">
-	<div class="count">共{{data.reply_count}}条回复</div>
-</div>
-<!-- 所有回复 -->
-<ul class="replies">
-	<li class="reply"
-	v-for='re in data.replies'>
-	<div class="author clear"
-	v-link="{name:'user',params:{username:re.author.loginname}}">
-	<img :src="re.author.avatar_url">
-	<span class="name">{{re.author.loginname}}</span>
-	<span class="create_at">{{$index}}楼&nbsp&nbsp&nbsp{{re.create_at|last_reply_at}}</span>
-</div>
-<div class="content"
-v-html='re.content|replaceLink'>
-</div>
-<!-- 点赞和回复评论 -->
-<div class="ups clear" v-if='loginStatus'>
-	<div @click='ups(re.id,re.ups)'>{{upsText(re)}}({{re.ups.length}})</div>
-	<div @click='showReply(re.id,re.author.loginname)'>回复</div>
-</div>
-<!-- 回复该楼 -->
-<div class="myReply" v-if='re.id===showReplyId'>
-	<textarea name="myReply" class="myReplyText" rows="3" required
-	v-model='myReReply' id="reReply"
-	@click='iosScrollTo'>@{{showReplyName}}  </textarea>
-	<mt-button type='default' size='small'
-	@click="reReply(re.id)">回复该楼</mt-button>
-</div>
-</li>
-</ul>
-<!-- 回复楼主 -->
-<div class="myReply" v-if='loginStatus' >
-	<textarea name="myReply" class="myReplyText" rows="5"  id='replyAuthor'
-	placeholder="快来回复楼主吧！" required
-	v-model='myReply'
-	@click='iosScrollTo'></textarea>
-	<mt-button type='primary' size='large'
-	@click='reply'>发表</mt-button>
-</div>
-</div>
-
-<show-pic v-ref:showPic></show-pic>
-</div>
 </template>
 
 <script>
@@ -434,6 +445,7 @@ v-html='re.content|replaceLink'>
 			font-size: .28rem;
 			box-sizing: border-box;
 			padding: 5px;
+			margin-bottom: -2px;
 		}
 	}
 	
