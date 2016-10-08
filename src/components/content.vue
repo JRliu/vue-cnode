@@ -107,7 +107,6 @@
 		},
 		data(){
 			return{
-				id:this.$route.params.id,
 				data:{
 					author:{},
 					content:''
@@ -133,6 +132,9 @@
 				}else{
 					return '取消收藏'
 				}
+			},
+			id(){
+				return this.$route.params.id;
 			}
 		},
 		vuex:{
@@ -211,11 +213,11 @@
 							Toast({message:err.body.error_msg,duration:1000})
 						})
 					}
-				},
-				replyFocus:function(){
-					let reply=document.getElementById('replyAuthor');
-					reply.scrollIntoView();
-				},
+			},
+			replyFocus:function(){
+				let reply=document.getElementById('replyAuthor');
+				reply.scrollIntoView();
+			},
 			//点赞
 			ups:function(id,ups){
 				this.$http({
@@ -299,12 +301,15 @@
 						document.body.scrollTop=0;
 					},500)
 				}
-				
 				// 返回时调整scrolltop到进入内容时的状态
 				if(sessionStorage.contentId==this.id){
 					this.$nextTick(()=> {
 						document.body.scrollTop=sessionStorage.contentScrollTop;
 					});
+				}else{
+					setTimeout(()=>{
+						document.body.scrollTop=0;
+					},500)
 				}
 			},
 			deactivate(transition){
@@ -322,6 +327,7 @@
 <style scoped lang='scss'>
 	#content{
 		position: absolute;
+		top: .7rem;
 		width: 100%;
 	}
 	.panel{

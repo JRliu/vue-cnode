@@ -78,6 +78,7 @@
 		padding-left: .2rem;
 		padding-right: .2rem;
 		position: absolute;
+		top:.7rem;
 		label{
 			font-size: .4rem;
 			font-weight: 700;
@@ -104,6 +105,7 @@
 		.prompt{
 			text-align: left;
 			margin-top: 30px;
+			font-size: .2rem;
 		}
 	}
 </style>

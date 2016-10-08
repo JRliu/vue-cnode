@@ -84,6 +84,7 @@
 		border-width: 2px 1px;
 		box-sizing: border-box;
 		position: absolute;
+		top:.7rem;
 		width:100%;
 		.tab{
 			position: relative;

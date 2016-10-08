@@ -13,8 +13,14 @@ export default new Vuex.Store({
 		//登陆状态
 		loginStatus:localStorage.getItem('auto-login')||false,
 		userData:JSON.parse( localStorage.getItem('userData') )||'',
-		accessToken: localStorage.getItem('accessToken') ||''
-		
+		accessToken: localStorage.getItem('accessToken') ||'',
+		tabsName:[
+					{name:'首页',en:'all',icon:'quanbu'},
+					{name:'精华',en:'good',icon:'jinghua'},
+					{name:'分享',en:'share',icon:'fenxiang'},
+					{name:'问答',en:'ask',icon:'tiwen'},
+					{name:'招聘',en:'job',icon:'zhaopin'},
+				]
 	},
 	mutations:{
 		SAVE_TOPICS(state,data){

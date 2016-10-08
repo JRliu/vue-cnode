@@ -66,8 +66,8 @@ router.map({
 	},
 	'/loginIn':{
 		name:'loginIn',
-		component(resolve){
-			require(['./components/loginIn.vue'],resolve)
+		component(){
+			require('./components/loginIn.vue')
 		}
 	},
 	'/message':{

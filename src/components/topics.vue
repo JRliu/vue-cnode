@@ -84,7 +84,7 @@
 				this.$http({
 			      method:'GET',
 			      url:'https://cnodejs.org/api/v1/topics',
-			      params:{'tab':this.$route.params.tab,'page':page}
+			      params:{'tab':this.$route.params.tab,'page':page,limit:15}
 			    }).then((response)=>{
 			      successFn(response);
 			    }).catch((err)=>{
@@ -193,26 +193,8 @@
 <style scoped lang='scss'>
 	#topics{
 		position: absolute;
+		top:.7rem;
 		width: 100%;
-	}
-	#tab{
-		/*height:50px;*/
-		padding: 5px;
-		.tab{
-			height:.5rem;
-			line-height:.5rem;
-			font-size: .3rem;
-			padding: 1px 5px;
-			background-color: #fff;
-			float: left;
-			border-radius: 15%;
-			margin-left: 10px;
-			cursor: pointer;
-		}
-		.active{
-			background-color: #2e2e2e;
-			color: #fff;
-		}
 	}
 	.topic{
 		border-width: 2px 1px;
@@ -227,33 +209,35 @@
 		}
 	}
 	.title{
-		font-size: .28rem;
+		font-size: 16px;
 		text-align: left;
 		padding: .1rem 0;
 		width: 100%;
 		cursor:pointer; 
-		text-overflow:ellipsis;
-		/*white-space: nowrap;*/
-		overflow: hidden;
+		word-break: break-all;
+		/*text-overflow:ellipsis;*/
+		/*white-space: pre-line;*/
+		/*overflow: hidden;*/
 	}
 	.top{
 		position: relative;
-		height: .4rem;
+		height: 25px;
 		.tab{
 			position: absolute;
 			left: 0;
 			background-color: #e1e1e1;
-			height:.4rem;
-			width:.5rem;
-			line-height: .4rem;
-			padding: 0 .1rem;
+			height:25px;
+			width:35px;
+			line-height: 25px;
+			padding: 0px 3px;
 			border-radius:10%;
-			font-size: 0.2rem;
+			font-size: 14px;
 		}
 		.last_reply_at{
 			position: absolute;
 			right: 0px;
-			line-height: .4rem;
+			line-height: 25px;
+			font-size: 12px;
 		}
 	} 
 	.footer{
@@ -264,6 +248,7 @@
 			line-height: 20px;
 			color: #999999;
 			position: absolute;
+			font-size: 12px;
 		}
 		.reply_visit{
 			right: 0px;

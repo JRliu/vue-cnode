@@ -40,7 +40,7 @@
 		height: 100%;
 		background-color: rgba(0,0,0,.8);
 		overflow: auto;
-		z-index: 10;
+		z-index: 999;
 		padding: 30px;
 		box-sizing: border-box;
 		text-align:center;

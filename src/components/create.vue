@@ -92,6 +92,7 @@
 <style scoped lang='scss'>
 	#create{
 		position: absolute;
+		top:.7rem;
 		width: 100%;
 		background-color: #fff;
 		border: 1px solid #e2e2e2;

@@ -121,6 +121,7 @@
 <style scoped lang='scss'>
 	#userpage{
 		position: absolute;
+		top:.7rem;
 		width: 100%;
 	}
 	.introduction{

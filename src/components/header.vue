@@ -1,18 +1,18 @@
 <template>
 	<div id="header">
+		<span class="title">{{header_title|tabNameCn}}</span>
 		<i class="iconfont icon-meun"
 		   @click='showSidebar'></i>
-		<img src="https://cnodejs.org/public/images/cnodejs_light.svg" alt="cnode" class="logo">
-		<span v-if='loginStatus' @click='create'
+		<span class='create' v-if='loginStatus'
 			  v-link='{path:"/topic/create"}'></span>
 	</div>
 </template>
 
 <script>
 	export default{
-		methods:{
-			create:function(){
-
+		computed:{
+			header_title:function(){
+				return this.$route
 			}
 		},
 		vuex:{
@@ -41,14 +41,10 @@
 		z-index: 9;
 		color: #ffffff;
 		text-align: center;
-		.logo{
-			display: block;
-			position: absolute;
-			float: left;
-			height:50%;
-			top:25%;
-			left: 50%;
-			margin-left: -.7rem;
+		span.title{
+			font-size: .35rem;
+			line-height: .7rem;
+			text-align: center;
 		}
 		i{
 			font-size: .4rem;
@@ -60,15 +56,13 @@
 				top:-.02rem;
 			}
 		}
-		span{
+		span.create{
 			font-size: .6rem;
 			font-weight: 700;
 			line-height: .7rem;
 			width: .6rem;
 			position: absolute;
 			right: 2%;
-			vertical-align:text-top;
-			font-family:'Microsoft YaHei';
 			&:before{
 				content:'+';
 				position: relative;

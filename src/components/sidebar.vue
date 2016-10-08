@@ -42,6 +42,7 @@
 				{{btn.name}}
 			</li>
 		</ul>
+		<img src="https://cnodejs.org/public/images/cnodejs.svg" alt="cnode社区" class="logo">
 	</div>
 </template>
 
@@ -57,17 +58,6 @@
 	export default{
 		components:{
 			MtButton:Button
-		},
-		data(){
-			return{
-				btns:[
-					{name:'首页',en:'all',icon:'quanbu'},
-					{name:'精华',en:'good',icon:'jinghua'},
-					{name:'分享',en:'share',icon:'fenxiang'},
-					{name:'问答',en:'ask',icon:'tiwen'},
-					{name:'招聘',en:'job',icon:'zhaopin'},
-				]
-			}
 		},
 		methods:{
 			goList:function(btn){
@@ -117,6 +107,9 @@
 				},
 				userData:function(state){
 					return state.userData;
+				},
+				btns:function(state){
+					return state.tabsName;
 				}
 			}
 		}
@@ -130,6 +123,7 @@
 		background-color: #fff;
 		position: fixed;
 		top: 0;
+		left: 0;
 		z-index: 100;
 		.loginIn{
 			padding-top: .4rem;
@@ -182,6 +176,12 @@
 				background-color: #e2e2e2;
 				color: #fff;
 			}
+		}
+		.logo{
+			position: absolute;
+			left: 10%;
+			width: 80%;
+			bottom: 10%;
 		}
 	}
 	

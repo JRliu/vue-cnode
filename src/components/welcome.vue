@@ -12,7 +12,7 @@
 				let fn=()=>{
 					this.$route.router.go('/all')
 				}
-				setTimeout(fn,3000)
+				setTimeout(fn,2300)
 			}
 		}
 	}

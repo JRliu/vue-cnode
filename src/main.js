@@ -46,32 +46,23 @@ router.map({
 			},
 			'/topic/:id':{
 				name:'topic',
-				component(resolve){
-					require(['./components/content.vue'],resolve)
-				}
+				component:require('./components/content.vue')
 			},
 			'/topic/create':{
-				component(resolve){
-					require(['./components/create.vue'],resolve)
-				}
+				name:'create',
+				component:require('./components/create.vue')
 			},
 			'/user/:username':{
 				name:'user',
-				component(resolve){
-					require(['./components/user.vue'],resolve)
-				}
+				component:require('./components/user.vue')
 			},
 			'/loginIn':{
 				name:'loginIn',
-				component(resolve){
-					require(['./components/loginIn.vue'],resolve)
-				}
+				component:require('./components/loginIn.vue')
 			},
 			'/message':{
 				name:'message',
-				component(resolve){
-					require(['./components/message.vue'],resolve)
-				}
+				component:require('./components/message.vue')
 			}
 		}
 	}
